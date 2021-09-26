@@ -20,10 +20,18 @@ Route::get('/', function () {
 
 // Route::get('/', [App\Http\Controllers\ArticleController::class, 'index']);
 
-Route::resource('/articles', App\Http\Controllers\ArticleController::class)->middleware('auth');
+// Route::resource('/articles', App\Http\Controllers\ArticleController::class)->middleware('auth');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/articles', App\Http\Controllers\ArticleController::class);
+});
 
 // Route::redirect('/', route('articles.index'), 302);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/bs/index', function () {
+    return view('bs.index');
+});
